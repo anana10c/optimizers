@@ -10,7 +10,7 @@ class fsdp_config:
     mixed_precision: bool = True
     use_fp16: bool = False
     seed: int = 42
-    fsdp_activation_checkpointing: bool = True
+    fsdp_activation_checkpointing: bool = False
     limit_all_gathers: bool = True
     sharding_strategy: ShardingStrategy = (
         ShardingStrategy.FULL_SHARD

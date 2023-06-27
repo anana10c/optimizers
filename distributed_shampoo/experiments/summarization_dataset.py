@@ -35,7 +35,9 @@ class wikihow(Dataset):
         output_length,
         print_text=False,
     ):
-        self.dataset = load_dataset("wikihow", "all", data_dir="data/", split=type_path)
+        self.dataset = load_dataset(
+            "wikihow", "all", data_dir="../../data/", split=type_path
+        )
         if num_samples:
             self.dataset = self.dataset.select(list(range(0, num_samples)))
         self.input_length = input_length
