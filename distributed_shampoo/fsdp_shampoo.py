@@ -430,7 +430,9 @@ class FSDPShampoo(torch.optim.Optimizer):
                         right_comm=right_comm,
                     )
                 else:
-                    raise NotImplementedError("invalid tensor block recovery method")
+                    raise NotImplementedError(
+                        "invalid tensor block recovery method {self._tensor_block_recovery}"
+                    )
 
                 # Count parameters from preconditioners for logging purposes.
                 self._parameter_count += state[PRECONDITIONERS].parameter_count
@@ -550,12 +552,9 @@ class FSDPShampoo(torch.optim.Optimizer):
             weight_decay = group[WEIGHT_DECAY]
             for p in group[PARAMS]:
                 # skip parameters not on worker
-                if p.numel() == 0:
+                if p.numel() == 0 or p.grad is None:
                     continue
-
                 grad = p.grad
-                if grad is None:
-                    continue
 
                 # TODO: Sparse case still not supported.
                 if grad.is_sparse:
